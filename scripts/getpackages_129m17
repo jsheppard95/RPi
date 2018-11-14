@@ -1,0 +1,45 @@
+#!/bin/bash
+
+#
+# getpackages - Download extra Raspberry Pi software
+#
+# 29Oct17  Added mupdf
+# 26Jul16  Updated for 150m16
+# 27May16  Everett Lipman
+#
+
+KEYCOMMAND="apt-key update"
+COMMAND="apt-get"
+OPTIONS="-y install"
+UPDATE="$COMMAND update"
+UPGRADE="$COMMAND -y upgrade"
+AUTOREMOVE="$COMMAND -y autoremove"
+PACKAGES="bc enscript gv htop imagemagick libav-tools lsof mupdf okular"
+PACKAGES="$PACKAGES pdftk python3-mpmath python3-smbus"
+PACKAGES="$PACKAGES spyder3 texlive vim-gtk x11-apps xterm"
+
+if [ `id -u` -eq 0 ]
+then
+   $KEYCOMMAND
+   $UPDATE
+   $UPGRADE
+   
+   $COMMAND $OPTIONS $PACKAGES
+   
+   $AUTOREMOVE
+   
+   #
+   # Set paper size to letter
+   #
+   /usr/bin/tl-paper set all letter
+   echo letter > /etc/papersize
+   
+   #
+   # Fix problem with dvips fonts
+   #
+   updmap-sys --setoption LW35=ADOBE --setoption dvipsDownloadBase35=false
+else
+   echo >&2
+   echo "$0: this script must be run as root." >&2
+   echo >&2
+fi

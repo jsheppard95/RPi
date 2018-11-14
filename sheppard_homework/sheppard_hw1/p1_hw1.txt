@@ -1,0 +1,14 @@
+P1) Password Security
+Number of combinations = (number of possible characters)^(password length)
+1) For a password of 8 binary characters, there are two possibilities for each character in the password. Thus, there are 2^8 = 256 possible passwords.
+
+2) For a password of 4 characters, each having 16 possibilities, there are 16^4 = 65536 possible passwords.
+
+3) 2 characters, 26 possibilities for each (a-z): 26^2 = 676 possible passwords.
+
+4) 8 characters, each being one of a-z, A-Z, or 0-9 (62 possible characters):
+62^8 = 218340105584896 possible passwords
+
+5) 8 characters in length, 94 possible characters:
+94^8 = 6095689385410816 possible passwords
+

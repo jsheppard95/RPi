@@ -1,0 +1,4 @@
+P6) Write File
+Explanation:
+The file p6_hw2.py contains a program that creates a file containing two user-provided strings and displaying them one per line in the file. It first uses the function provided in /phys129/python/ careful_write(outlines, filename). This function takes in a list of strings (outlines) to be written to the file (filename). It so by first checking to see if the chosen filename is not already in use, so as not to overwrite any files, and then outputs each entry in outlines followed by a newline character '\n'.
+The program then inputs two strings from the user and stores them in an input list. It then instructs the user to create and output file name, or enter nothing and take the default name p6_hw2_outfile.txt. It then calls the function careful_write using the list of the two strings and the output file name as its arguments.

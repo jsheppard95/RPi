@@ -1,0 +1,9 @@
+P3) String Processing
+filename: p3_hw3.txt
+
+p3_hw3.py: Use and Information
+
+This program receives a string through user input and processes it in a variety of ways and displays the results to the monitor.
+It first prompts the user to enter of a string of three or more words using the input function. It then generates a list containing the words in the string using the split() method that itemizes a string by separating elements by spaces.
+To ensure the user enters a string of at least three characters, the program uses a while loop that tests the length of the list and reprompts the user until it is at least three words.
+Printing the words in the string can then simply be achieved by iterating over the words in the list.

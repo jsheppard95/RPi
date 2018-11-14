@@ -1,0 +1,8 @@
+P3) Acquire and Store Data Explanation
+p3_hw5.txt
+
+This program acquires one second of voltage data from the solar cell (Adafruit MCP9808) at a rate of 920 samples per second (920 samples total) and stores the voltage data in a text file with one voltage per line.
+The program is modified from the fastadc.py program which fulfills a similar function.
+The program initially declares the data acquisition time, sample frequency, and voltage range to be used in the problem, and then initializes an array to hold the voltage data. It then creates an ADS1x15 object from the Adafruit module that measures the voltage from the solar cell. It then calls the startContinuousDifferentialConversion() function with arguments that specify the channels to be used on the sensor, the previously declared voltage range, and the sampling frequency.
+Since the total acquisition time is known, the program creates an array for the time values using the np.arange() function starting at 0, ending at 1, and using intervals equal to the sampling period (1/frequency).
+The program then simply writes the contents of the voltage array to an output file and plots the voltage vs. time.

@@ -1,0 +1,26 @@
+P1) Finding Files
+To understand the function of the dfr alias, we first must display the alias dfr command to the monitor. We can do this by simply typing alias with no arguments into the terminal to display all currently defined aliases, but it is more concise to pipe this output through the grep command to display only the dfr alias:
+
+jrsrpi95:/home/pi$ alias | grep dfr
+alias dfr='find . -maxdepth 1 -mtime -1 -o -ctime -1'
+
+Thus, dfr is aliased to the find command.
+The find command searches a given directory and its subdirectories for files that match the attributes specified in the options of the command. The argument of find is the '.' directory which is the directory the user is currently in. The argument is then followed by a series of "tests" that tell the command what attributes the files it searches for and displays should have.
+The first test is '-maxdepth 1'. This modifies the find command to search at most one subdirectory below the cammand line arguments, in this case th '.' directory.
+The next two tests surround the '-or' operator, which is abbreviated '-o'. These are '-mtime -1 -o -ctime -1'. '-mtime -1' specifies to match files whose contents were last modified less than 24 hours ago. The '-1' following the test designates the time interval, and in general can be '+n', corresponding to more than n*24 hours ago, or '-n', corresponding to less than n*24 hours ago.
+The test '-ctime -1' then specifies to search for files whose contents or attributes were last modified less than 24 hours ago. This differs from '-mtime' in that '-ctime' includes changes to files attributes, which can include permissions as an example, while -mtime only applies to changes of the file contents.
+These two tests, '-mtime' and '-ctime' surround on either side the 'or' operator (abbreviated '-o') which matches files satisfying both of tests '-mtime' and '-ctime'.
+Thus, the alias 'dfr' searches the '.' direcrtory (the directory the user is currently in) at most one subdirectory below for files whose contents or attributes were modified less than 24 hours ago. This results in the following output when in the home directory:
+
+jrsrpi95:/home/pi$ dfr
+.
+./lecture_files
+./sheppard_homework
+./.gv
+./.xsession-errors
+./phys129
+./.gconf
+./.python_history
+./.vimrc
+./config_129m17
+

@@ -1,0 +1,77 @@
+#!/bin/bash
+
+#
+# update_129m17 - Update Raspberry Pi configuration for Phys 129
+#
+# 19Jun17  Updated for 129m17
+# 24Mar17  Adapted from update_150m17 by Everett Lipman
+#
+
+cd $HOME
+if [ $? -ne 0 ]
+then
+   echo >&2
+   echo "could not change to directory $HOME .  Exiting." >&2
+   echo >&2
+   exit 1
+fi
+
+TRM="129m17"
+CONFDIR="config_$TRM"
+TARFILE="${CONFDIR}.tar.gz"
+RMFILES="config*${TRM}*.tar* ./Downloads/config*${TRM}*.tar*"
+URL="http://web.physics.ucsb.edu/~phys129/lipman/handouts/$TARFILE"
+SETUP="setup_$TRM"
+
+PROGNAME=`basename $0`
+USAGE="$PROGNAME"
+NARGS=`expr \`echo $USAGE | wc -w\` - 1`
+
+error_exit()
+{
+echo ""
+echo $1
+echo ""
+echo "$PROGNAME exiting."
+echo ""
+exit 1
+}
+
+errorcheck()
+{
+if [ $? -ne 0 ]
+then
+   error_exit "Error $1"
+fi
+}
+
+if [ $# -ne $NARGS ]
+then
+   error_exit "usage: $USAGE"
+fi
+###############################################################################
+
+echo
+echo "Updating up your Raspberry Pi for Phys 129..."
+echo
+###############################################################################
+
+#
+# clear old tar files
+#
+\rm -f $RMFILES
+errorcheck "clearing old tar files"
+
+wget $URL
+errorcheck "downloading configuration tar file"
+
+\rm -rf $CONFDIR
+
+tar zxf $TARFILE
+errorcheck "upacking configuration tar file $TARFILE"
+
+cd $CONFDIR
+errorcheck "changing to configuration directory $CONFDIR"
+###############################################################################
+
+exec ./$SETUP

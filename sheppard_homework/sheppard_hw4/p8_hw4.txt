@@ -1,0 +1,10 @@
+P8) Get Web Page with Socket Explanation
+filename: p8_hw8.txt
+
+The goal of this program was to retrieve the Phys 129 course web page by opening a socket to port 80 and printing the date that the web page was last updated.
+It, however, is unable to do so due to its inability to connect to the Phys 129 web page by its host name. We can see the issue with the following terminal command:
+
+jrsrpi95:/home/pi$ ping http://web.physics.ucsb.edu/~phys129/lipman/
+ping: unknown host http://web.physics.ucsb.edu/~phys129/lipman/
+
+One possible way to fix this problem would be to determine the specific ip address of the course web page and then open a socket that connects to it through the ip number. One could then parse the contents of the web page to find the line containing "Latest update" to find and return to the date of which the website was most recently updated.

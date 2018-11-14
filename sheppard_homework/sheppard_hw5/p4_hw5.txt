@@ -1,0 +1,10 @@
+P4) Fourier Analysis Explanation
+p4_hw5.txt
+
+This program reads in a data (.dat) file containg 920 voltage readings taken evenly over one second with one voltage per line. It then computes the power spectrum of the signal to identify the fundamental frequency at which the light intensity varies.
+The program initial declares similar varialbles to those in p3_hw4.py consisting of the total acquisition time, the sampling frequency, and the number of data points. The program then uses this information to create an array for time using the np.arange() function that has 920 uniformly spaced values between 0 and 1, corresponding to the times at which the voltages were read. It then creates a voltage array to store the from the input file.
+The program receives its input from the output of p3_hw5.py. I initially tested the program using a cell phone camera LED light but could not obtain any effective measurement. I then used the overhead lights in Broida 5207 and was able to find a reasonable frequency.
+The program computes the power spectrum of the voltage vs. time data using the psd function from the matplotlib module. This performs a fourier transform on the data, takes the absolute value, and only plots the positive frequencies. The largest peak in this plot would then correspond to the fundamental frequency of the light source.
+To find the maximum value, the program uses the np.argmax() function to find the index of the maximum value in the voltage array. This index then corresponds to the frequency of maximum intensity, and this value is printed to the monitor.
+For the lights in BRDA 5207, this program found the fundamental frequency to be:
+121.0 Hz

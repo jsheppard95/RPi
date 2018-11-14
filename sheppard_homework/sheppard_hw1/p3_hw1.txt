@@ -1,0 +1,19 @@
+P3) Password Security, part 2
+a)
+Password: 12 characters in length, 94 possible options:
+(94^12) possible passwords
+At (10^12) guesses per second, the amount of time it would take to try every possible password is:
+t = (94^12 guesses)/(10^12 guesses/sec) * (1 hr/3600 sec) * (1 day/24 hr)
+    * (1 yr/365 days)
+t = 15091.33418360773
+
+b)
+For a passphrase using only lower and upper case letters and spaces, there are 53 possible options.
+To have the same strength as the 12 character password in part (a), still having (10^12) guesses per sec, we want the time to guess each possible password to be (94^12)/(10^12) sec.
+With a password length of L characters, there are (53^L) possible passwords.
+We thus have:
+(94^12)/(10^12) sec = (53^L guesses)/(10^12 guesses/sec)
+(94^12)/(10^12) = (53^L)/(10^12)
+53^L = 94^12 => ln(53^L) = ln(94^12) => L*ln(53) = 12*ln(94)
+L = 12*ln(94)/ln(53) = 13.731871251366696 = 14 characters in length.
+Thus, to maintain the strength as in part (a), this password must be 14 characters in length.

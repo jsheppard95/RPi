@@ -1,0 +1,78 @@
+P2) Directory Checksum
+The program ds, as specified in the heading comments, computes a checksum of all files under a specified directory. The directory is given as the argument to the ds program which then outputs the hash for the directory passed onto the monitor, for example:
+
+jrsrpi95:/home/pi/phys129/scripts$ ./ds /home/pi/lecture_files
+
+385871559c73824f5635f602025cc735  -
+
+The script begins with some initial variable declaration:
+
+SUMCOMMAND=md5sum
+# This variable serves as the command to run the checksum on the specified directory using the preloaded md5sum program
+PROGNAME='basename $0'
+# This serves as the program name. The '$0' variable stands for the program name and its working directory, while the command basename strips the preceding directory and leaves only the program name, in this case 'ds' (once the script is running).
+USAGE="$PROGNAME [directory]"
+# This variable will be used in error messages and will simply read (once the script has started) "ds [directory]".
+
+The next two variables NARGSa and NARGSb simply are set to 0 and 1, respectively and stand for valid numbers of arguments to be passed to the ds script.
+
+The script continues with two function definitions that deal with error handling. 
+The first function, error_exit(), closes the program in the case that an error occurs. This function prints blank lines to the monitor for spacing using echo "". The command:
+
+echo $1
+
+outputs the first argument passed to error_exit() to the console. This will serve as a way to report the type of error if one occurs. The function then outputs the string "ds exiting" (since 'ds' will substitute for $PROGNAME once the script is running). Finally, the command 'exit 1' closes the program and reports and error code to the system.
+The second function, errorcheck(), checks for errors in the input directory and then calls error_exit if there are any. The first if statement,
+
+if[ $? -ne 0 ]
+
+checks if the most recently executed foreground pipeline, $?, is not equal to the integer 0. The variable '?' contains a code for each previously executed command. If it is 0, no error occured, and if it is non-zero the previous command will have had an error. This program thus checks to see if an error occured, and then calls error_exit() with the argument "Error $1", where $1 stands for the first argument passed to errorcheck().
+
+The script begins implementing the directory passed as its argument after the initial variable and function declarations.
+
+The first if statement after the declaration of errorcheck() checks to see if the input argument was a valid directory:
+
+if [ $# -ne $NARGSa -a $# -ne $NARGSb ]
+
+The variable '$#' expands to the number of positional parameters. Since it does not appear inside of a function, this applies to the number of parameters passed to the ds program. The variables $NARGSa and $NARGSb then stand for 0 and 1 respectively as previously defined, and so this conditional statement checks to see if the number of input arguments is not equal to 0 and not equal to 1 (meaning the argument is not a valid directory). If this is true, the script calls error_exit with the parameter "usage: $USAGE" which would then expand and output "usage: ds [director]" followed by "ds exiting" and exiting the program as shown:
+
+jrsrpi95:/home/pi/phys129/scripts$ ./ds 1 2 3
+
+usage: ds [directory]
+
+ds exiting.
+
+The next conditional checks to see if there was a valid input directory and assigns this directory to the environment variable CDPATH.
+
+if [ $# -eq 1 ]
+
+This checks to see if the number of parameters passed to the ds script is one, and if so, executes the following commands:
+
+unset CDPATH
+cd "$1" > /dev/null
+
+The environment variable CDPATH shows the path taken to the current directory. The command 'unset CDPATH' then clears this variable, leaving the path /dev/null. The command that follows then overwrites the directory name that was passed to ds to this previously cleared path. The result of this changes the current directory path to that passed to the 'ds' script. The program then calls:
+
+errorcheck "changing to specified directory"
+
+which check to see if the input directory had a valid name. If there was an error changing the directory path, then the variable '#?' will be non-zero. This function checks for exactly this, and if '#?' is found to be non-zero then errorcheck will call error_exit "Error $1", where $1 would then expand to "changing to specified directory. An example of such an occurance is:
+
+jrsrpi95:/home/pi/phys129/scripts$ ./ds hello
+
+./ds: 49: cd: can't cd to hello
+
+Error changing to specified directory.
+
+ds exiting.
+
+The final block of code beginning with the find command performs the checksum on the input directory. The command reads:
+
+find . -noleaf -type f | sort | while read i
+
+This searches the directory '.', which stands for the current working directory, for files. The directory '.' now stands for the directory passed as the argument to ds due to the changing of CDPATH in the previous conditional statement. We see here that the user has the option of entering ds with no arguments, resulting in a checksum of the current working directory.
+The option '-noleaf' tells find to not optimize by assuming the input directory contains two fewer subdirectories than the hard link count. This assumption is in general made to improve efficiancy in the search.
+The option '-type f' searches for regular files only.
+This output (result of find) is then piped to the sort command, which processes the filenames, line by line, and outputs them in alphabetical order.
+This, however, is then piped to the 'while read' loop which iterates over the sorted files and designating each by the variable 'i'. We then iterate over each file and cat the contents to the standard output, which is then piped to the variable $SUMCOMMAND that expands to the program md5sum. This, as a result, performs the checksum on each of the files inside the directory passed to the script.
+
+The program, ds, therefore performs a checksum on the directory given as its input (or the working directory if no input is given) and outputs the checksum to the console as shown above.

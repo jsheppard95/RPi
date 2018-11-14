@@ -1,0 +1,92 @@
+P1) Mounting and Using a Disk
+1) Initially running (cat /proc/partitions | grep sd) there is no output. This is because the cat command was piped through "grep sd" which searches file /proc/partitions for the string 'sd'. Typing:
+cat /proc/partions
+We see there is no file with the string 'sd', and so we did not recieve any output. After inserting a flash drive, we will receive an output.
+
+2) After inserting the flash drive, enter:
+cat /proc/partitions | grep sd
+Output:
+   8        0   15138816 sda
+   8        1   15137792 sda1
+Here we see one entry for the whole drive, sda, and one entry for a partition, sda1. This partition can be accessed independently from all future partitions.
+
+3) df | grep sd
+Output:
+/dev/sda1       14900104  214152  13912680   2% /media/pi/09313210-47d1-4339-8992-c9418fd40e1e
+The df command displays the amount of available space on the file system of each file given as its argument. Typing df with no arguments displays all file systems, and so piping the command through (grep sd) displays the mounting information of the drive. We see from the output that the drive was automatically mounted to /media/pi...
+In order to unmount the partition, we must run the command:
+sudo umount /dev/sda1
+If we now run:
+df | grep sd
+There is no output, indicating the drive was unmounted.
+
+4) To mount partition /dev/sda1 to a directory in /home/pi, we first create a new directory:
+mkdir flash_drive
+We then mount the device using:
+sudo mount /dev/sda1 /mnt
+We now enter:
+df | grep sd
+Output:
+/dev/sda1       14900104  214152  13912680   2% /mnt
+Thus indicating that partition 1 is now mounted on /mnt. We can now backup the previously created directory in /home/pi using:
+sudo rsync -av /home/pi/flash_drive/ /mnt/pi_17Jul17
+Output:
+sending incremental file list
+./
+
+sent 54 bytes  received 19 bytes  146.00 bytes/sec
+total size is 0  speedup is 0.00
+
+The directory flash_drive is now backed up to /mnt, although currently we cannot write files to /mnt without using sudo, and so we must change permissions using:
+sudo chown pi:pi /mnt
+Now entering:
+ls -alF /mnt
+Output:
+total 36
+drwxr-xr-x  6 pi   pi    4096 Jul  7 00:11 ./
+drwxr-xr-x 22 root root  4096 Jun 26 21:40 ../
+drwx------  2 root root 16384 Jul  3 20:26 lost+found/
+drwxr-xr-x 25 pi   pi    4096 Jul  3 20:03 pi_03July17/
+drwxr-xr-x 25 pi   pi    4096 Jul  3 20:03 pi_13Apr16/
+drwxr-xr-x  2 pi   pi    4096 Jul  7 00:06 pi_17Jul17/
+
+We see from the output the owner of the directory ./ is now pi. We can now write files to /mnt.
+
+5) sudo mount | grep sd
+Output:
+gvfsd-fuse on /run/user/1000/gvfs type fuse.gvfsd-fuse (rw,nosuid,nodev,relatime,user_id=1000,group_id=1000)
+/dev/sda1 on /mnt type ext4 (rw,relatime,block_validity,delalloc,nojournal_checksum,barrier,user_xattr,acl)
+
+6) df | grep sd
+Output:
+/dev/sda1       14900104  214156  13912676   2% /mnt
+
+We see the disk is mounted to /mnt.
+
+7) To create a text file on the mounted drive, we run:
+vi /mnt/textfile.txt
+We then enter some text into the file:
+This is a textfile with some text in it.
+
+8) To unmount the flash drive, we run:
+sudo umount /mnt
+There is now output, but if we now run:
+df | grep sd
+There is no output corresponding to the flash drive, and so we confirm the device is unmounted.
+
+9) sudo mount | grep sd
+Output
+gvfsd-fuse on /run/user/1000/gvfs type fuse.gvfsd-fuse (rw,nosuid,nodev,relatime,user_id=1000,group_id=1000)
+
+Comparing this with the result of (5), we can see there is no longer any flash drive mounted on the system.
+
+10) df | grep sd
+There is no output, indicating the device is properly unmounted.
+
+11) To mount /dev/sda1 on /mnt, we again enter:
+sudo mount /dev/sda1 /mnt
+
+12) To read the contents of the file textfile.txt off of the disk, we enter:
+cat /mnt/textfile.txt
+Output:
+This is a textfile with some text in it.

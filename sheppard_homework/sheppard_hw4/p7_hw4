@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# P7) wget, grep, and sed
+# filename: p7_hw4
+# author: Jackson Sheppard
+# Last modified: 21Jul17
+
+# Shell script to determine when Phys 129 web page was last updated 
+
+# get html information and extract date
+wget http://web.physics.ucsb.edu/~phys129/lipman/
+update_line=$(cat index.html | grep "Latest update" | sed -e 's/^.*">//' -e 's/<.*$//' | sed 's/&nbsp;/ /')
+
+# echo result to monitor
+echo "Website last updated:"
+echo $update_line
+echo ''
+rm -f index.html # delete html file, no longer needed

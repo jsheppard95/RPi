@@ -1,0 +1,15 @@
+P5) Processor Temperature
+Explanation
+a)
+The file p5a_hw2.py contains a program that prints the processor temperature to the monitor once every second in an infinite loop.
+The initial function getTemp() uses the subprocess module to read the temperature file /sys/class/thermal/thermal_zone0/temp containing the processor temperature. This module uses cat and therefore stores the value as a string in units of millidegrees celcius, and the so the remaining part of the function simply converts the type to float and the units to degrees celcius. The function then returns the floating point temperature in degrees celcius.
+The function periodic_print() then creates the infinite loop. In each iteration, it calls the function getTemp(), then prints the temperature with two digits after the decimal place, and adds a one second delay between iterations using the time module.
+The remaining lines of the program then simply print a heading a call the periodic_print() function to begin the infinite loop.
+The remaining lines of the file then contain a copy of the function creating the infinite loop in part (b).
+
+b)
+The file p5b_hw2.py contains a prints the string "It's getting hotter!" with no restrictions on the time between iterations. It is designed to be ran at the same time as p5a_hw2.py in order to increase the processor temperature as it displays the message repeatedly and then observe this temperature change using the program in p5a_hw2.py.
+We initially run ./p5a_hw2.py, which begins checking and recording the processor temperature in one second intervals.
+The temperature is roughly constant with small fluctuations about 55-56 degrees celcius.
+When we run ./p5b_hw2.py, the temperature rises quickly, at what appears to be roughly 1 degree per second. This increase appeared to slow approaching 67-68 degrees, but it did continue to increase. The program in p5b_hw2.py (the infinite loop) was stopped when the temperature reached 73 degrees. At this point the temperature fell very rapidly and reached 62 degrees very quickly. It then began to fluctuate at about 60 degrees but did finally decrease after some time. The program in p5a_hw2.py was then stopped when the temperature fluctuated at roughly 57-59 degrees C.
+

@@ -1,0 +1,25 @@
+P1) Project specification
+filename: p1_hw4.txt
+
+a) List of group Members:
+Jackson Sheppard
+
+b) Description:
+My Physics 129 final project will be a program that solves the two dimensional heat equation for a rectangular plate with user controlled boundary conditions. The program will then display using a 3D plot the temperature of the square plate as a function of position on the plate x and y and will change with time t. The basic algorithm will be to expres the solution as a multidimensional Taylor expansion about x, y, and t. The program will then increment t by set amounts and see how the temperature changes at specified locations x and y according to the differential equation. The result is a numerical solution of the system, which can then be plotted as a three dimensional surface plot and contour plot for a visual representation of the temperature of the plate.
+
+c) List of additional hardware:
+none
+
+d) List of pre-written software components in addition to standard Linux/Python installation on RPi
+matplotlib
+mplot3d
+numpy
+
+e) Description of software I will write:
+I will write the program that will consider hundreds of points along a two dimensional grid representing the plate and calculate temperature gradients according to the differential equation. I will then use matplotlib to create a visual representation of the solution using 3D surface plots and 2D contour plots showing lines of constant temperature and equations of heat flow.
+
+f) List of Tasks
+1) Solve differential equation with taylor expansion technique
+2) Write function to consider large 2d array of input data and model according to differential equation
+3) Create plotting function to show a 3d visual representation of the solution
+4) Allow plot to change with time t according to user controlled boundary conditions.

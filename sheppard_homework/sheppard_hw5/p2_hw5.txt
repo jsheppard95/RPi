@@ -1,0 +1,12 @@
+P2) Temperature Stripchart Explanation
+p2_hw5.txt
+
+This program displays the current temperature measured by the MCP9808 as a function of time. It does so by simply modifying the code and algorith used in problem 1: p1_hw5.py.
+The only necessary changes to be made in this program are simply to reset the limits on the temperature axes along with both axes labels, and to instead plot the temperature measured by the sensor rather than the value sin(w*t).
+The temperature is measured by initially creating an MCP9808 object called sensor. The temperature can then be read as follows:
+
+sensor = MCP9808()
+sensor.begin()
+Tc = sensor.readTempC()
+
+The final line returns the temperature as a float in degrees Celcius. We then sisimply include this line in the emitter function within the Scope class and yield the value Tc. Running the program then produces a constantly changing plot of the measured temperature vs. time.

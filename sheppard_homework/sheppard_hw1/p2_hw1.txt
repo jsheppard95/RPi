@@ -1,0 +1,4 @@
+P2) Computation Time
+For a configuration of 8 characters in length, each having 94 possibilities, there are a total of (94^8) possibilities. At (10^11) guesses per sec, to check every possible combination it would take:
+t = (94^8 guesses)/(10^11 guesses/sec) * (1 hr/3600 sec) * (1 day/24 hr)
+t = 0.7055196047929184 days

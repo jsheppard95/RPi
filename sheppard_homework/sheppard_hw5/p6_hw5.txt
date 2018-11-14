@@ -1,0 +1,15 @@
+P6) Polynomial Fits Explanation
+p6_hw5.txt
+
+This program gernerates a user specified number N of random points in the xy plane with x and y both running from 0 to 100. The program then fits polynomials of degree 1, N-3, and N-1 to the data.
+
+After inputting the number of data points from the user, the program creates two arrays of random numbers using the function np.random.random_sampel([N]). This function outputs a 1d array of N floating point numbers between 0 and 1. We do this for both the x and y points, and then scale the points to 100 using:
+
+xdata *= 100
+ydata *= 100
+
+The program then plots the raw data and creates three polynomial fits on the same data set of degree 1, N-3, and N-1 with commands of the form:
+
+poly np.polyfit(xdata, ydata, deg)
+
+We then plot each of these three polynomials on the same axes as the raw data, and save the resulting plot a .eps file.

@@ -1,0 +1,27 @@
+P3) Threaded Stripchart Explanation
+p3_hw6.txt
+
+This program modies the previous stripchart program to display the value of a
+global variable. It does sow by spawning a thread that continuously prompts
+the user to enter a new value and stores the value in this global variable.
+The program continues to run and prompt the user until it is quit usong CTRL-Z.
+
+The only modification that needs to be made to the "__init__" function within
+the scope class is within the "set_ylim" function. This change is to set the
+limits from (-value-5) to (value+5), where value is the user entered global
+vairable. This ensures the value entered by the user is always in view on the
+plot. Within the function "emitter", I also changed the yield statement to
+be the value stored in the global variable "value"
+
+The function to be passed to the thread is called "get_value" and simply
+contains an inifite while loop prompting the user to enter a number. It then
+uses a "try, except" conditional to ensure the user enters a valid number
+without crashing the program, and stores the entered number in the global
+variable "value".
+
+The "__main__" function contains the call to start the thread with the
+function "get_value", while the "__main__" function calls the Scope class to
+begin showing the global variable initially set as 0.5.
+
+The result is a program that continually displays this global variable as the
+user updates it from the terminal.

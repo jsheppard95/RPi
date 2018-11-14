@@ -1,0 +1,6 @@
+P7) wget, grep, and sed Explanation
+filename: p7_hw4.txt
+
+This shell script accesses the course webpage and echos the date that it was last updated to the monitor.
+The first wget command accesses the contents of the course webpage and saves them as a file 'index.html'. The script then reads this file using cat and accesses the update line using the grep command. The resulting string is then piped through the sed command to remove everything but the day, month, and day of the week in the date.
+The script then echos the resulting string to the monitor and uses the rm command to remove the 'index.html' file from the directory in which the script is running.

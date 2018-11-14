@@ -1,0 +1,102 @@
+P3) diff
+filename: p3_hw4.txt
+author: Jackson Sheppard
+Last modified: 22Jul17
+
+The diff program is used to detect differences between files. This can be used to detect changes between different versions of the same program, as it displays both files to the console with markers indicating changes to each. The program is called using:
+
+$ diff file1 file2
+
+However, the program is far more readable using the '-c' option for 'context':
+
+$ diff -c file1 file2.
+
+This will display the first file followed by the second file with distinct markers to designate each. It then displays the line by line contents of the first file followed by the second file with the following "context format change indicators":
+
+blank = line shown for context only, no change between two file
+-     = line delted from first file, appears in first but not in second
++     = line added to first file, appears in second but not in first
+!     = two versions of the line were changed
+
+If we thus run the program with the arguments 'plotcos.py' (example code that plots cos(x) for N periods) and 'p11_hw4.py' (homework problem to plot sin(x) and cos(x0 for 2.5 complete periods on the same graph), we receive the following output:
+
+jrsrpi95:/home/pi$ diff -c ~/phys129/python/plotcos.py ~/sheppard_homework/sheppard_hw4/p11_hw4.py
+Output:
+*** /home/pi/phys129/python/plotcos.py  Wed Jul 13 23:48:17 2016
+--- /home/pi/sheppard_homework/sheppard_hw4/p11_hw4.py  Sat Jul 22 21:13:03 2017
+***************
+*** 1,41 ****
+  #!/usr/bin/env python3
+  
+! #
+! # plotcos.py - Plot cos(x)
+! #
+! # 13Jul16  Everett Lipman
+! #
+! USAGE="""
+! usage: plotcos.py N
+  
+!        N is the number of complete periods to plot.
+! """
+! NPOINTS = 512
+! 
+! import sys
+! import os
+  
+! if len(sys.argv) != 2:
+!    sys.stderr.write(USAGE)
+!    print('', file=sys.stderr)
+!    exit(1)
+! 
+! try:
+!    N = float(sys.argv[1])
+! except ValueError:
+!    sys.stderr.write('\nCannot convert "%s" to a number of periods.\n'
+!                     % sys.argv[1])
+!    sys.stderr.write(USAGE)
+!    print('',file=sys.stderr)
+!    exit(1)
+  
+  import numpy as np
+  import matplotlib.pyplot as plt
+  
+! xvals = np.linspace(0, 2.0*N*np.pi, NPOINTS)
+  
+  f1, ax1 = plt.subplots()
+! ax1.plot(xvals,np.cos(xvals))
+  f1.show()
+  
+  input("\nPress <Enter> to exit...\n")
+--- 1,30 ----
+  #!/usr/bin/env python3
+  
+! # P11) Plot Trig Functions
+! # filename: p11_hw4.py
+! # author: Jackson Sheppard
+! # Last modified 22Jul17
+  
+! # Program to plot sin(theta) and cos(theta) for 2.5 complete periods
+  
+! print("Creating Plot...")
+  
+  import numpy as np
+  import matplotlib.pyplot as plt
+  
+! NPOINTS = 512
+! NPERIODS = 2.5
+! PERIOD = 2.0*np.pi
+  
++ xvals = np.linspace(0, NPERIODS*PERIOD, NPOINTS)
+  f1, ax1 = plt.subplots()
+! ax1.plot(xvals, np.cos(xvals), 'b-')
+! ax1.plot(xvals, np.sin(xvals), 'r-')
+! plt.title(r'$\sin(\theta)$ and $\cos(\theta)$ vs. $\theta$')
+! plt.xlabel(r'$\theta$') # produces 'theta' 
+! plt.ylabel(r'$\cos(\theta)$ = blue, $\sin(\theta)$ = red')
+! f1.savefig("p11_hw4_sincos.eps")
+  f1.show()
+  
++ 
+  input("\nPress <Enter> to exit...\n")
+
+We see at the top of the output, the first and second files are assigned the '*' and '-' markers, respectively. These markers then designate the contents of each file in the remainder of the output. We see from this that the two files differ substantially, this is because while they do use the same python libraries they accomplish very different tasks. We thus see that the majority of lines when compared were changed completely.

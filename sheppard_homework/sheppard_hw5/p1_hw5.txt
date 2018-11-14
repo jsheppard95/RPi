@@ -1,0 +1,9 @@
+P1) Stripchart Explanation
+p1_hw5.txt
+
+This program produces a continuously running plot of sin(pi*t) vs. t. It is modified from the stripchart.py program which uses an object oriented design to plot random points between 0 and 1 as a function of time.
+The class Scope creates an object with three built in function that create the plot of sin(wt) vs. t.
+The first function __init__ is responsible for creating the figure, axes, and curve to be used in the plot. It declares the neccessary variables such as 'tdata' and 'ydata' as numpy arrays and 'ax' as figure axes that can be called later to immediately create the appropriate plot
+The next function update is responsible for appending data into the arrays created within the __init__ function and to extend the axes limits accordingly as the data is inputed live.
+The final function emitter then progresses the program through time and calculates sin(wt) in a while True loop.
+The main function then calls then creates a 'scope' object along with an animation object to draw the curve and then plots sin(wt) vs. t until the program receives a keyboard interrupt.

@@ -1,0 +1,87 @@
+P8) Capacitor Potential Relaxation Explanation:
+p8_hw6.txt
+
+This program solves for and displays the electric potential in the
+neighborhood of a 2-dimensional parallel-plat capacitor using the
+relaxation method. The program uses a square grid with its edges grounded
+and the capacitor placed at its center with top plate set at +V and 
+bottom plate set at -V. The program then store the potential at each
+point on the grid in an array and creates and image portraying
+the solution through a color spectrum, ranging from V=0 in blue to the
+maximum voltage in red.
+
+The user can specify the following parameters in the program in the section
+labeled "Adjustable Parameters" at the top of the program. These include:
+
+N: number of iterations
+GRID: grid size
+GAP: capacitor gap
+WIDTH: capacitor plate width
+THICKNESS: capacitor plate thickness
+V: The potential on each plate (+V on top, -V on bottom)
+
+The program then creates two arrays: one of type 'uint' titled 'pvals'
+corresponding to the image data, and the other of type 'float' titled
+'volt' corresponding to the actual voltages at each location at and near
+the plate. The structure of the program is to numerically solve for the
+voltage at each location and store the data in the 'volt' array, and then
+process this data into the 'pvals' array to create the image.
+
+The process of relaxation to solve Laplace's Equation (the solution to the
+potential V(x,y) in our problem) involves initially setting the boundary
+conditions in the solution grid, and then iterating through each point in
+the grid and setting it to the average of the four surrouding points. This
+process is repeated until the voltages at each point on the grid stop
+changing, at which point the current solution satisfies the properties of
+the function we are trying to model.
+
+The program therefore has a function to initially set the boundary
+conditions in the array 'volt' corresponding to our grid. This includes
+grounding the edges of the grid and setting the plates of the centered
+capacitor to +/-V. The program then implements the relaxtion algorithm
+not by iteration over each location in the grid but instea using the
+functions 'np.roll' to set all of the points in the grid to the average of
+those surrounding at once. This decreases the run time of the program
+dramatically from the original iteration scheme.
+
+The program repeats this process using the numpy 'roll' function until
+the difference between values in the grids are less than 0.00015.
+At this point the while loop is broken and the program begins to process
+the 'volt' array into the 'pvals' array for imaging.
+
+This part of the program cause be considerable difficulty, as I could not
+find a way to map negative voltages to colors in the image. There are
+functions that allow one to map an entire range of data values to a color
+spectrum, but I could not implement them into my program with the time
+available. Instead, the program simply saves the rounded absolure value of
+each entry in the array 'volt' into the array 'pvals'. Each value in 'pvals'
+is then of type 'uint' and can then be mapped to a color value. The result,
+however, is an image representing the solution with ground (V=0) shown in
+blue and both increasing (positive) and decreasing (negative) voltages shown changing from yellow to orange to red.
+
+This program produced the following eps files for these sets of boundary
+conditions:
+
+1) p8_hw6_cap1.eps
+N = 10000
+GRID = 200
+GAP = 0.2*GRID
+WIDTH = 0.4*GRID
+THICKNESS = 0.02*GRID
+V = 5
+
+2) p8_hw6_cap2.eps
+N = 10000
+GRID = 200
+GAP = 0.1*GRID
+WIDTH = 0.3*GRID
+THICKNESS = 0.05*GRID
+V = 2
+
+3) p8_hw6_cap3.eps
+N = 10000
+GRID = 200
+GAP = 0.22*GRID
+WIDTH = 0.5*GRID
+THICKNESS = 0.06*GRID
+V = 6

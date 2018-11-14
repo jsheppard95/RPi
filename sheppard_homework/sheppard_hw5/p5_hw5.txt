@@ -1,0 +1,20 @@
+P5) Heat Transfer Explanation
+p5_hw5.txt
+
+To complete this problem, I split the tasks described in parts (a) and (b) into two separate programs. The program p5a_hw5.py uses the MCP9808 temperature sensor to take measure the temperature as it cools for 120 seconds at a rate of 4 samples per second. It then plots this raw data and outputs the temperatures to a .dat file with one temperature sample per line. The program p5b_hw5.py then reads in this data file and fits and exponential curve. It then plots the curve and the raw data on the same axes and dtermines the rate constant for the exponential temperature decay.
+The program p5a_hw5.py follows a very similar design to that of p3_hw5.py but instead creates a temperature sensor object as opposed to a voltage sensor one. I then change only the total acquisition time to 120 seconds and the sampling frequency to four samples per second. To obtain a plot of a cooling process, I simply held the temperature sensor in my hand before taking data and a few seconds into the start time. I then released the sensor and allowed it to cool to room temperature over the remaining acquisition time. The program then stores the results in a data file and plots the raw data.
+The program p5b_hw5.py then reads in the data file produced by the previous program and stores the temperatures in an array. After recreating the time array, the program computes the index of the maximum temperature read by the sensor. This is the point at which the cooling process began and the starting point of the data that we would like to fit. New arrays are therefore created using list slicing that start at the maximum temperature and its corresponding time.
+The second program performs the curve fitting using the scipy function curve_fit. This function takes in another previously defined function to which we fit the data, which is defined as:
+
+def exp_func(x, a, k, b):
+   return a*np.exp(-k*x)+b
+
+We then pass this function to the curve_fit function along with the input data as:
+
+popt, pcov = curve_fit(exp_func, t_fit, T_fit, maxfev=10000)
+
+This function returns two arrays. The first, popt, contains the parameters within exp_func a, k, and b, while the second, pcov, contains their corresponding variances.
+The second program then plots the function exp_func with the time values and parameters contained in popt alongside the raw data.
+This results in a plot of the temperature of the sensor as it cools to room temperature and an exponential best fit equation
+For this cooling process, the program determined the time constant of the exponential, k, to be:
+k = 0.0153701878526 s^-1

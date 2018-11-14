@@ -1,0 +1,80 @@
+P2) Doing your backups?
+filename: p2_hw4.txt
+author: Jackson Sheppard
+Last modified: 22Jul17
+
+After inserting the flash drive, we can type 'df | grep sd' to see the device was automatically mounted. We then unmount the device using 'sudo umount /dev/sda1' for the only partition on the device, 'sda1'.
+We then mount  the device using:
+
+jrsrpi95:/home/pi$ sudo mount /dev/sda1 /mnt
+
+This mounts the flash drive on /mnt. We can now backup the home directory to a new directory on the flash drive for today using the following command:
+
+jrsrpi95:/home/pi$ sudo rsync -av /home/pi/ /mnt/pi_19Jul17
+
+We can then watch as each file and each subdirectory within /home/pi is sent to the flash drive. We can then view this and all backups on the flash drive with the command:
+
+jrsrpi95:/home/pi$ ls -alF /mnt
+Output:
+total 44
+drwxr-xr-x  7 pi   pi    4096 Jul 20 04:45 ./
+drwxr-xr-x 22 root root  4096 Jun 26 21:40 ../
+drwx------  2 root root 16384 Jul  3 20:26 lost+found/
+drwxr-xr-x 25 pi   pi    4096 Jul  3 20:03 pi_03July17/
+drwxr-xr-x 25 pi   pi    4096 Jul  3 20:03 pi_13Apr16/
+drwxr-xr-x  2 pi   pi    4096 Jul  7 00:06 pi_17Jul17/
+drwxr-xr-x 32 pi   pi    4096 Jul 20 04:24 pi_19Jul17/
+-rw-r--r--  1 pi   pi      41 Jul  7 00:38 textfile.txt
+
+We can then access and view the contents of the most recent backup with the commands:
+
+jrsrpi95:/home/pi$ cd /mnt/pi_19Jul17
+jrsrpi95:/mnt/pi_19Jul17$ ls -alF
+Output:
+total 568
+drwxr-xr-x 32 pi pi   4096 Jul 20 04:24 ./
+drwxr-xr-x  7 pi pi   4096 Jul 20 04:45 ../
+drwxr-xr-x  3 pi pi   4096 Jul 14 05:51 .Wolfram/
+drwxr-xr-x 10 pi pi   4096 Jul 14 05:52 .WolframEngine/
+-rw-------  1 pi pi    102 Jul  1 20:40 .Xauthority
+-rw-------  1 pi pi    311 Jun 26 20:37 .bash_history
+-rw-r--r--  1 pi pi    220 Apr 10 09:17 .bash_logout
+-rw-r--r--  1 pi pi    130 Jun 26 20:28 .bashrc
+drwxr-xr-x  8 pi pi   4096 Jul 14 05:51 .cache/
+drwx------ 14 pi pi   4096 Jul  7 01:07 .config/
+drwx------  3 pi pi   4096 Jun 26 20:50 .dbus/
+drwx------  2 pi pi   4096 Jul 20 04:24 .gconf/
+drwx------  3 pi pi   4096 Jul  7 01:07 .gnome/
+drwxr-xr-x  2 pi pi   4096 Apr 10 10:09 .gstreamer-0.10/
+-rw-r--r--  1 pi pi    511 Jul 13  2016 .gv
+drwxr-xr-x  5 pi pi   4096 Jun 30 05:52 .ipython/
+drwx------  3 pi pi   4096 Jul 18 20:15 .kde/
+drwxr-xr-x  3 pi pi   4096 Apr 10 09:52 .local/
+drwx------  3 pi pi   4096 Apr 10 10:29 .pki/
+-rw-r--r--  1 pi pi    675 Apr 10 09:17 .profile
+-rw-------  1 pi pi   4744 Jul 19 20:43 .python_history
+drwxr-xr-x  4 pi pi   4096 Jun 30 05:52 .spyder2-py3/
+drwxr-xr-x  3 pi pi   4096 Apr 10 10:09 .themes/
+-rw-r--r--  1 pi pi    472 May  3  2016 .vimrc
+-rw-------  1 pi pi  12708 Jul 20 04:23 .xsession-errors
+drwxr-xr-x  2 pi pi   4096 Apr 10 10:09 Desktop/
+drwxr-xr-x  6 pi pi   4096 Jul 14 05:51 Documents/
+drwxr-xr-x  2 pi pi   4096 Jun 26 22:11 Downloads/
+drwxr-xr-x  2 pi pi   4096 Apr 10 10:09 Music/
+drwxr-xr-x  2 pi pi   4096 Apr 10 10:09 Pictures/
+drwxr-xr-x  2 pi pi   4096 Apr 10 10:09 Public/
+drwxr-xr-x  2 pi pi   4096 Apr 10 10:09 Templates/
+drwxr-xr-x  2 pi pi   4096 Apr 10 10:09 Videos/
+drwxr-xr-x  2 pi pi   4096 Jul  8 16:21 __pycache__/
+drwxr-xr-x  8 pi pi   4096 Jul 20 04:24 config_129m17/
+-rw-r--r--  1 pi pi 387960 Jul 18 20:21 figure_1.ps
+drwxr-xr-x  2 pi pi   4096 Jul  7 00:06 flash_drive/
+-rw-r--r--  1 pi pi   2600 Jul 18 20:15 hello.pdf
+-rwxr-xr-x  1 pi pi    219 Jul 18 19:57 hello.ps*
+drwxr-xr-x  2 pi pi   4096 Jul 17 07:05 lecture_files/
+drwxr-xr-x  2 pi pi   4096 Jul 17 07:05 oldhw/
+drwxr-xr-x  9 pi pi   4096 Jul 20 04:24 phys129/
+drwxr-xr-x  2 pi pi   4096 Apr 10 09:52 python_games/
+drwxr-xr-x  5 pi pi   4096 Jul 17 07:05 sheppard_homework/
+
+Thus, the home directory of the rasberry pi is now saved to the flash drive under the directory /pi_19Jul17.

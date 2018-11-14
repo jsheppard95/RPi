@@ -1,0 +1,30 @@
+P5) Variables and Aliases
+Variables:
+Assigning a value to a particular variable stores that information in the computer's memory under the variable's name. It can then be called for later use in the terminal. Assignment in bash works as follows:
+
+var1="Hello!"
+echo $var1
+
+This would print the string "Hello!" to the monitor, as no redirection command is given. We can see there are many variables stored on the computer at startup. For example, we can set today's date to the variable NOW and then echo this value to the monitor in the same way as any other variable:
+
+NOW=$(date)
+echo "Today's date is: $NOW"
+
+We use the '$' symbol before date to store the value associated with this predifined variable in the new variable "NOW".
+
+Aliases:
+The alias command allows one to run any command or group of commands, while also adding any desired options and arguments, simply by entering a predefined string into bash. There are many aliases predefined at startup, and these can be viewed by entering:
+
+alias | less
+
+Where the piping symbol, '|', used with 'less' displays the contents to the monitor one page at a time. Entering this into bash shows some simple aliases such as:
+
+alias py='python3' # launches python
+alias c='clear'    # clears screen
+
+The strings 'py' and 'c' take on the commands 'python3' and 'clear', respectively. Alias can also take in arguments to the commands that it calls, as an example:
+
+alias now='echo $(date)'
+
+Entering the string 'now' into the terminal would then execute the command echo with the value assigned to date.
+We thus see the main difference between variable assignment and aliases is that variables store values in user defined variable names while aliases store commands in user defined strings. Variables are thus used to store specified values for repeated use while aliases can store specified commands for later use.

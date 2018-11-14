@@ -1,0 +1,10 @@
+P6) PostScript Flower Explanation
+filename: p6_hw4.txt
+
+After inputing the specified number of flower petals from the user, the program calculates the angular spacing of each petal as 360/(number of petals). This ensures that each petal is evenly spaced in a complete circle.
+
+The program then creates an output file 'p6_hw4_petal.ps' that will contain a postscript program that draws a flower of the specified number of petals. The majority of this output is taken from the example code petal.ps on the RPi. This program is stored as the string output and initially contains all code up to the instructions to draw each petal.
+
+The program then creates an array containing the angular location of each petal in increasing order. Thus, the program can iterate through this array and add to the output string commands to draw a petal at each angle. After this, the program simply adds the closing lines 'grestore' and 'showpage' to the output string,a and writes the string to the output file.
+
+The result is therefore a postscript program that draws a flower with a user-specified number of petals.

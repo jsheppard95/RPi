@@ -1,0 +1,8 @@
+P4) 3-4-5 Right Triangle Explanation
+filename: p4_hw4.txt
+
+The program begins by creating a new image using the .new() method within the Image module. The horizontal and vertical dimensions are 512 and 410, respectively. The horizontal dimension is specified in the problem and the vertical dimension was chosen to agree with the proportions of the 'rt345.eps' example code.
+
+The program then creates a draw object from the ImageDraw module that allows one to place successive pixels in the empty image between two specified pixel locations. The margins of the image were again set following the proportions of the 'rt345.eps' example code.
+
+After creating this object and specifying the margin size, the program simply begins drawing (placing successive pixels) along the horizontal side of the triangle. The program then calculates the vertical height of the triangle using basic trigonometry, and continues inserting pixels from its previous location to the newly found location. The program then draws the hypotenuse of the triangle by returning to the starting location.

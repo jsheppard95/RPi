@@ -1,0 +1,3 @@
+P4) User Input:
+Explanation:
+This program takes in an input string from the user and prints it to the monitor 10 times. It does so using the input() function that stores a user input string in the variable 'printed_string'. The program then uses a for loop to print the string to the monitor 10 times.

@@ -1,0 +1,59 @@
+P4) cat and echo
+The commands cat and echo have similar uses and differ in subtle ways.
+
+The cat Command:
+The cat command has three related uses: it can diplay files, copy existing files, or create new files. The general syntax is:
+
+cat [options] [filenames] [-] [filenames]
+
+To read files, cat can take a filename as its argument and display its contents to the monitor (standard output):
+
+cat filename
+
+It can also write the contents of one existing file into a new or already existing file:
+
+cat file1 > file2
+
+This copies the contents of file1 into file2, overwriting the contents of file2 in the process. To instead append the contents of file1 into file2, one uses:
+
+cat file1 >> file2
+
+The standard input of cat, if no argument is given, is the keyboard. The standard output would again be the monitor, but this can be changed to an output file using:
+
+cat > output_file
+
+This would create the file "ouput_file" if it does not already exist, and otherwise it would overwrite its contents with the keyboard input. Another role of cat is the concatenation of files. With multiple files as its arguments and using the standard output, cat will concatenate the contents of each file and display the result to the monitor:
+
+cat file1 file2 file3
+
+It can also output the concatenated files into a new output file using the redirection key:
+
+cat file1 file2 file3 > output_file
+
+This, as expected, would overwrite the previous contents of output_file. To instead append the contents, one would use the ">>" redirection.
+
+The echo Command:
+The echo command has similar functionality to the cat command. It too writes its arguments to the standard output, the monitor unless otherwise specified. The syntax for echo is:
+
+echo [option(s)] [string(s)]
+
+We thus immediately see a main difference between cat and echo is the argument type they each receive. While cat takes files as input, echo takes strings. Both can process the information within the input in similar ways, as the echo command by default writes the input strings to the monitor:
+
+echo This is some text.
+
+This command would simply print "This is some text" to the console, while replacing "echo" with "cat" would have each string interpreted as a file name.
+
+Another feature of echo is its ability to process variables within its input.
+For example, the command:
+
+x=6
+
+assigns the value 6 to the variable x. The echo command can then refer to this value as:
+
+echo The value assigned to x is $x
+
+Since echo takes in strings as inputs, it follows, by default, any output with the newline charcter "\n". One can, however, signify additional occurances of "\n" using the -e option:
+
+echo -e "Start: \n\nWe skipped two lines \n\nFinish"
+
+We can  see from this input structure that cat, unlike echo, iterates through each character in the input file (some of which may be new line characters) and outputs it to the desired location. Echo, on the other hand, is taking its input as strings, and therefore must be explicitly told when to skip lines.

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#
+# WARNING - this script is still experimental.  Use at your own risk.
+#
+
+#
+# fixres - Fix Raspberry Pi screen resolution
+#
+# 25Apr16  Everett Lipman
+#
+
+XRES=1920
+YRES=1080
+
+tvservice -e "CEA 16 HDMI"
+fbset -depth 24 -xres $XRES -vxres $XRES -yres $YRES -vyres $YRES

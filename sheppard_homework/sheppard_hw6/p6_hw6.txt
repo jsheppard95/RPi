@@ -1,0 +1,39 @@
+P6) Numerical Integration Explanation
+p6_hw6.txt
+
+This program computes the integral over the entire x axis (-infinity, infinity)
+of y = e^(-x^2) through two numerical methods. The first uses Riemann squares
+to approximate the integral as a sum of many rectangles, and the second uses a
+Monte Carlo Simulation to guess random points within a known region and see
+which points fall within the curve. The program then produces one plot for each
+method of the relative error from the known value of the integral verus N,
+where N is either the number of rectangles or the number of random points.
+
+It is first noted that the computer cannot actually perform the integral over
+the range (-infinity, infinity), and so instead choose a lower and upper limit
+at which the function has decayed close enough to 0 so that the remainder of
+the integral does not add significantly to the result. These limits are chosen
+to be +/-5, at which point the functional value is 10^-11.
+
+The rectangle approximation method divides the x axis between +/-5 into N
+rectangles of height equal to the function point at each x. These heights are
+store in an array "yvals" and the integral is then approximated as the sum of
+these entries multiplied by the base of each rectangle (the step size).
+
+The Monte Carlo simulation uses the same region as the rectangle approximation
+but instead chooses N random points using the numpy random functions. We
+consider this region to be a large rectangle of length 10 (running from x=-5
+to x=+5) and height 1 (running from y=0 to y=1). The program then determines
+the number of points falling within the curve by comparing the y coordinate of
+the random point to the result of evalating the function of interest at the
+x coordinate. If the function point is larger, then the random point is within
+the curve. We then know the ratio of the number of points within the curve to
+the total number of points is equal to the ratio of the area under the curve 
+(the integral) to the known box area, resulting in an approximation for the
+integral.
+
+The program then generates a plot of the relative error from the known result
+of sqrt(pi) versus N, where N is either the number of rectangles or number of
+random points. We see from these plots that the rectangle approximation is far
+more accurate, and its relative error decreases much faster and more uniformly
+than that of the Monte Carlo simulation.

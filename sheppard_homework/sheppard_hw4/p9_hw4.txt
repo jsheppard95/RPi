@@ -1,0 +1,9 @@
+P9) Get Web Page with Requests Explanation
+filename: p9_hw4.txt
+
+This program uses python requests to access the Phys 129 course web page and print out the date that the website was last updated.
+The program first creates a request object r and stores the contents of the web page in a string using the built in method r.text. The remaining task is then simply to parse this string until the date of the previous update is found.
+
+It does so by iterating through each entry in previously defined list containing the days of the week followed by the months in the year as strings. The program then iterates through each string and determines if it is in the web page string using the 'in' operator. If the month or day is found to match, it is added to a previously defined empty output string
+
+The next task is to find the day within the determined month of the previous update. This is accomplished by noting the stirng '&nbsp;' always separates the month and day within the web page string. We can then immediately find the day by using the str.find() method to search for this delimiter and find the day number accordingly. The program then simply add this day expressed as a number to the output string and prints the output string to the monitor.

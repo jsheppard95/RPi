@@ -1,0 +1,42 @@
+P7) Monte Carlo Circle Explanation
+p7_hw5.txt
+
+This program was again split into two corresponding to the tasks specified in parts (a) and (b). The first program p7a_hw5.py generates a user specified number N of uniformly distributed random points in the xy plane with x and y both running from 0-2. It then counts the number of points lying withing the circle of radius 1 centered at (x,y) = (1,1) to determine an estimate of the area of this circle and, since A = pi*r^2 = pi, the value of pi. The second program, p7b_hw5.py then uses the first program to plot the fraction error in the determined value of pi as a function of N. The fractional error is defined as:
+
+fractional error = |(actual value) - estimate|/(actual value)
+
+We therefore expect the fractional error to decrease as N increases.
+The first program p7a_hw5.py consist of one function monte_carlo_pi(N) that takes in a number N of random points and returns an estimate of the value of pi through the method described previously. It initially determines the random coordinates using the random.random_sample() function as:
+
+coordinates = np.random.random_sample([N,2])
+
+This creates an N by 2 array which can be viewed as N (x,y) coordinate pairs. The function fills the array with float numbers between 0 and 1, and so we scale the coordinates to the specified region using:
+
+cordinates *= 2
+
+The function then iterates through the coordinates in this array and determines if they lie within the specified circle using the fact that all (x,y) points lying within the circle of radius 1 centered at (1,1) satisfy:
+
+(x-1)^2 + (y-1)^2 <= 1
+
+The for loop thus checks if each coordinate pair satisfies the above relationship and records a running total of those that do, N_circle.
+
+We thus know the ratio of the number of points lying with the circle to the total number of points equals the ratio of the area of the circle to that of the square:
+
+N_circle/N = pi/4 -> pi = 4*N_circle/N
+
+The function therefore returns this value. The remainder of p7a_hw5.py contains the conditional if __name__=="__main__" followed by the commands to take user input and print the result of the monte_carlo_pi function. This tells the program to only execute these commands if the file is executed from the terminal, allowing the following program p7b_hw5.py to call the function monte_carlo_pi without running the entire module that contains it.
+
+The second program p7b_hw5.py first imports the monte_carlo_pi function (along with the numpy and matplotlib.pyplot module) using the command:
+
+from p7a_hw5 import monte_carlo_pi
+
+As long as the two programs are contained in the same directory than the second can access this function in the same way as a function from any other module.
+The program then specifies the number of data points to plot as:
+
+NPTS = 1000
+
+This causes the program to take roughly 15 seconds to run, but produces a very clear trend. The program then defined an array Nvals to serve as the independent variable that runs from 1 to 1000 as:
+
+Nvals = np.arange(1, NPTS+1)
+
+The program then iterates through each entry in Nvals and calls the monte_carlo_pi function with is value of N and computes the relative error from the numpy defined value of pi using the definition above. These error values are then stored in the array err_vals, and this is plotted against N using the matplotlib.pyplot module. The resulting plot is then saved as a .eps file and shows a very clear decline in the relative error as N increases.

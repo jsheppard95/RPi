@@ -1,0 +1,35 @@
+P5) Counting Simulation Explanation:
+p5_hw6.txt
+
+This program has a function which simulates photon counting 1000
+one-millisecond intervals with the probability of detection in each interval
+being 0.002. It then plots a histogram displaying the result of calling the
+function 1000 times and overlays on the plot a graph of the Poisson
+distribution with the same mean and standard deviation as this simulation.
+
+The program is constructed very similary as "p4_hw6.py", which simulates 100
+coin tosses and plots the histogram for 1000 of its function calls. The
+distinguishing feature is that in the photon detection simulation the
+probability of success is very small and so we find a Poisson distribution best
+models this simulation.
+
+The function "photon_detection" serves as the simulation for this program, and
+simply picks a random floating point number betweeon 0 and 1 using the numpy
+function "random". It then checks if the number is less than or equal to 0.002
+(the probability of which is equal to the probability of photon detection) and
+if so adds one to previously initialized to zero count variable. This repeats
+100 times and the function returns the values stored in "count"
+
+The program then creates a normalized histogram of the result of 1000 function
+calls in a process identical to that in "p4_hw6.py". It then overlays this
+normalized histogram with a graph of the Poisson distribution defined as:
+
+P(n) = (u^n)*e^(-u)/n!, u = Np
+
+Here n is the total number of successes (photon detections) in the 1000 one
+millisecond intervals, u is the mean, N is the total number of trials (in
+this case 1000), and p is the probability of success (in this case 0.002).
+
+The graph produced by this program shows that the Poisson distribution
+accurately models this binomial process where the probability of success is
+very small.

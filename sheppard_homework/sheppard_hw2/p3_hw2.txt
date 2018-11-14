@@ -1,0 +1,46 @@
+P3) Shell script:
+#!/bin/sh
+
+#
+# proctemp - Return processor temperature
+#
+# 03Jul17  Updated to use $() in addition to ``
+# 22Apr16  Everett Lipman
+#
+
+TDIR=/sys/class/thermal
+TBASE=thermal_zone
+
+for i in $TDIR/$TBASE*
+do
+   echo -n "`basename $i`: "
+   echo "scale=1; $(cat $i/temp)/1000.0" | bc
+done
+
+Running Script:
+jrsrpi95:/home/pi$ ./phys129/scripts/proctemp
+thermal_zone0: 52.0
+
+This program returns the processor temperature in degrees celcius. It does so by the following algorithm:
+It first specifies variables TDIR and TBASE to serve as the directory and filename for the program to search through. The command substitution in the initial for loop statement can be read as:
+for i in /sys/class/thermal/thermal_zone*
+The '*' character serves as a 'wildcard' and instructs the program to match any character that would correspond to an actual filename. The program thus iterates through directories beginning with this name. We see from the following command and output that there is only one such directory:
+
+jrsrpi95:/home/pi$ echo /sys/class/thermal/thermal_zone*
+/sys/class/thermal/thermal_zone0
+
+This directory is /sys/devices/virtual/thermal/thermal_zone0, and thus the for loop has only one iteration, with i = /sys/class/thermal/thermal_zone0/
+The program then executes the two lines in the do command, the first of which is:
+echo -n "`basename $i`: "
+This outputs the arument to the monitor with the option '-n' that removes the new line character automatically added to the output of the echo command. The echo command takes in the output of the basename command, which removes any leading directory components from the input directory, the value stored in i. The result of this line prints the following text to the monitor:
+
+thermal_zone0: 
+
+The next line is:
+echo "scale=1; $(cat $i/temp)/1000.0" | bc
+This prints the temperature of the monitor directly following the output of the previous echo command. This line uses the bc command which is piped its input from the output of the echo command and performs the mathematical operations specified in the output of the echo command. It then displays the result to the monitor. The 'scale=1' entry specifies the command to show one digit after the decimal place. The command cat $i/temp then output the contents of the file /sys/class/thermal/thermal_zone0/temp, which when entered into the terminal we find:
+
+jrsrpi95:/home/pi$ cat /sys/class/thermal/thermal_zone0/temp
+51002
+
+This file contains the processor temperature expressed in millidegrees celcius. In order to convert this value to celcius, it should be divided by 1000.0, thus the need to specify one decimal place significance. We thus have the processor temperature in celcius written to the monitor directly after the directory name, as shown in the program's output above.

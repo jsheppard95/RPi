@@ -1,0 +1,10 @@
+P5) Mandelbrot Set Explanation
+filename: p5_hw4.txt
+
+The program begins by creating an empty image of the specified dimensions in the problem and setting all pixels to black. Since the Image moduel specifies pixels with a coordinate system (x,y) = (0,0) in the top left corner with x increasing horizontally to the right and y increasing vertically down, the program has two functions transformx() and transformy() that translate coordinates in this system to those of the complex plane with (0,0) at the center and x increasing horizontally to the right and y increasing vertically up.
+
+The basic algorithm is then to iterate through each pixels in the empty image, transform its pixel coordinates to those of the complex plane, determine if the point is in the mandelbrot set, and if not, color the pixel a specified color to designate it is not in the set. The black region of the resulting image will thuse contain points in the mandelbrot set.
+
+To determin if a specified point in the complex plane is in the set, the programcalculates at 250 entries of the mandelbrot sequence to determine if the entry diverges, in this case becomes greater than 2. If it does diverge, it will then set the (R,G,B) tupe of the pixel to (239, 222, 205), and almond color, that will designate the point is not in the set.
+
+The program saves the resulting image as a PostScript (.ps) file. It does not, however, center the image on a document with 56 point margins. I at first attempted to save the image as an .eps or .jpg file and then upload this to a .ps document where I could control the margins, but could not implement this idea. It may instead be possible to manually change the code in the resulting .ps file in a way to add margins and center the image.

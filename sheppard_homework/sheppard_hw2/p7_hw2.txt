@@ -1,0 +1,6 @@
+P7) Read File and Average
+Explanation:
+This program first includes a function file_readlines(filename) that iterates through the contents of the file in its argument and then stores each line in a list titled 'inlines'. Since the file contains simply one number per line, each element in the list will accordingly be a string containing the number and '\n' character designating the end of each line. The input file must have this specific format or else an error may occur. The program then takes and input file from the user, whcih in this case the file p7_hw2_numbers.txt is provided in the directory, and calls file_readlines on this file.
+In order to compute the average, we first iterate through the contents of inlines and remove the '\n' character from each line. We then convert what remains from a string to floating point number and store this new value in the list 'num_list'. We can then compute the average by iterating through the floating points in num_list and calculating the sum of all entries and then dividing by the total number of entries.
+This value is then stored in the variable 'avg' and the printed to the monitor.
+

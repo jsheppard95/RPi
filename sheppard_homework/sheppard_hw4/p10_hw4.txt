@@ -1,0 +1,36 @@
+P10) Time Server Explanation
+# filename: p10_hw4.txt
+
+This program will serve the current time when a connection is establish to TCP port 55555 on the RPi.
+The program first defines a function bind_port(prt) taken from the server.py example code that creates a socket and binds to port prt. The program then calls this function on port 55555.
+If this function executes without error, then a connection was established, and the program determines the current local time using the time.asctime() method.
+Again following the server.py example code, the program outputs this time to a file that can then be read by the program and sent through the socket. The program then continues to follow the example code using the sendall commands to send both a connection message and the time of connection to the client. Running this program along side the example code client.py produces the following output:
+
+Calling p10_hw4.py (server program):
+jrsrpi95:/home/pi/sheppard_homework/sheppard_hw4$ ./p10_hw4.py
+
+Calling client.py (client program):
+jrsrpi95:/home/pi/phys129/python$ ./client.py 55555
+
+Connecting to 127.0.0.1, port 55555...
+
+Connection closed.
+
+70 bytes received.
+
+
+Data:
+
+b'\n\nWe Have a connection!\n\nLocal date and time:\nSun Jul 23 06:30:16 2017'
+
+
+Decoded data:
+
+
+
+We Have a connection!
+
+Local date and time:
+Sun Jul 23 06:30:16 2017
+
+Thus, this program establishes a connection to TCP port 55555 and serves the current time to the client program.

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+#
+# rpi_browser - Launch web browser
+#
+# 18Apr17  Everett Lipman
+
+BPATH=/usr/bin/chromium-browser
+OPTIONS="--incognito --media-cache-size=0 --disk-cache-size=0"
+
+exec $BPATH $OPTIONS 2>/dev/null &
